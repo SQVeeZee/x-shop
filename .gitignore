@@ -23,7 +23,7 @@ x-shop/[Uu]ser[Ss]ettings/
 x-shop/*.csproj
 x-shop/*.sln
 x-shop/*.unityproj
-x-shop/*.DotSettings.user
+x-shop/*.DotSettings
 
 # Misc
 x-shop/*.log
