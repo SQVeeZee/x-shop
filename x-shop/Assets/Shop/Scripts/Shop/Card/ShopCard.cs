@@ -1,5 +1,4 @@
 using System;
-using Shop.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,47 +7,35 @@ namespace Shop
 {
     public class ShopCard : MonoBehaviour
     {
-        public enum Result
-        {
-            None = 0,
-            Info = 1,
-            Buy = 2,
-        }
-
         [SerializeField]
         private TextMeshProUGUI _header;
         [SerializeField]
         private Button _infoButton;
         [SerializeField]
         private Button _buyButton;
+        private ProductConfig _productConfig;
 
-        private Action<Result> _callback;
-
-        private void OnDestroy() => UnSubscribes();
-
-        public void Initialize(IProductInfo productInfo, Action<Result> callback)
+        public void Initialize(ProductConfig productConfig, Action<ProductConfig> buyCallback)
         {
-            _callback = callback;
+            _productConfig = productConfig;
 
-            ApplyHeader(productInfo.Description);
-            Subscribes();
+            AddDescription(productConfig.GetDescription());
+            AddBuyClickHandler(buyCallback);
         }
 
-        private void ApplyHeader(string description) => _header.text = description;
-
-        private void Subscribes()
+        public void AddInfoClickHandler(Action callback)
         {
-            _infoButton.onClick.AddListener(OnInfoButtonClickHandler);
-            _buyButton.onClick.AddListener(OnBuyButtonClickHandler);
+            _infoButton.gameObject.SetActive(true);
+            _infoButton.onClick.AddListener(() => callback?.Invoke());
         }
 
-        private void UnSubscribes()
-        {
-            _infoButton.onClick.RemoveListener(OnInfoButtonClickHandler);
-            _buyButton.onClick.RemoveListener(OnBuyButtonClickHandler);
-        }
+        private void AddDescription(string description) => _header.text = description;
+        private void AddBuyClickHandler(Action<ProductConfig> callback) => _buyButton.onClick.AddListener(() => callback?.Invoke(_productConfig));
 
-        private void OnInfoButtonClickHandler() => _callback?.Invoke(Result.Info);
-        private void OnBuyButtonClickHandler() => _callback?.Invoke(Result.Buy);
+        private void OnDestroy()
+        {
+            _infoButton.onClick.RemoveAllListeners();
+            _buyButton.onClick.RemoveAllListeners();
+        }
     }
 }
