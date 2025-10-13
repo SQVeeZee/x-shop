@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a87359d713d47ed84d440c926482237, type: 3}
-  m_Name: shop_product
+  m_Name: shop_product 1
   m_EditorClassIdentifier: 
   _cost:
   - {fileID: 11400000, guid: 0b0d3c123148f421a9fe84fa6de0ebd6, type: 2}
-  _reward:
   - {fileID: 11400000, guid: 441999764f00e4952b542ead1053c5d5, type: 2}
+  - {fileID: 11400000, guid: a8dc3e52892134c1e8b2071c70fb53de, type: 2}
+  _reward:
+  - {fileID: 11400000, guid: a6f19db8aa7e048b3973754cd6d47d00, type: 2}

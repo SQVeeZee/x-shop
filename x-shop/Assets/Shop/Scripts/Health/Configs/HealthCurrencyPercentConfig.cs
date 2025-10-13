@@ -1,35 +1,35 @@
 using Shop.Core;
 using UnityEngine;
 
-namespace Shop.Gold
+namespace Shop.Health
 {
-    [CreateAssetMenu(menuName = "Shop/Config/Currency/Gold", fileName = "gold_currency", order = 0)]
-    public class GoldCurrencyConfig : CurrencyDataConfig
+    [CreateAssetMenu(menuName = "Shop/Config/Currency/Health/Health percent", fileName = "health_percent_currency", order = 0)]
+    public class HealthCurrencyPercentConfig : BaseHealthCurrencyConfig
     {
+        [Range(0f, 100f)]
         [SerializeField]
-        private int _value;
-
-        protected override string CurrencyId => "gold_currency";
-        public override string DescriptionInfo => "Gold";
+        private int _percent;
 
         protected override bool IsEnoughCurrency(PlayerData playerData)
         {
             var current = playerData.GetDataInt(CurrencyId);
-            var remain = current - _value;
-            return remain >= 0;
+            var delta = Mathf.CeilToInt(current * (_percent / 100f));
+            return current >= delta;
         }
 
         protected override void SubtractCurrency(PlayerData playerData)
         {
             var current = playerData.GetDataInt(CurrencyId);
-            var remain = current - _value;
+            var delta = Mathf.CeilToInt(current * (_percent / 100f));
+            var remain = current - delta;
             playerData.SetDataInt(CurrencyId, remain);
         }
 
         protected override void ApplyReward(PlayerData playerData)
         {
             var current = playerData.GetDataInt(CurrencyId);
-            var total = current + _value;
+            var delta = Mathf.CeilToInt(current * (_percent / 100f));
+            var total = current + delta;
             playerData.SetDataInt(CurrencyId, total);
         }
     }

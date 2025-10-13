@@ -13,6 +13,7 @@ namespace Shop
         private Button _infoButton;
         [SerializeField]
         private Button _buyButton;
+
         private ProductConfig _productConfig;
 
         public void Initialize(ProductConfig productConfig, Action<ProductConfig> buyCallback)

@@ -1,16 +1,13 @@
 using Shop.Core;
 using UnityEngine;
 
-namespace Shop.Gold
+namespace Shop.Health
 {
-    [CreateAssetMenu(menuName = "Shop/Config/Currency/Gold", fileName = "gold_currency", order = 0)]
-    public class GoldCurrencyConfig : CurrencyDataConfig
+    [CreateAssetMenu(menuName = "Shop/Config/Currency/Health/Health", fileName = "health_currency", order = 0)]
+    public class HealthCurrencyConfig : BaseHealthCurrencyConfig
     {
         [SerializeField]
         private int _value;
-
-        protected override string CurrencyId => "gold_currency";
-        public override string DescriptionInfo => "Gold";
 
         protected override bool IsEnoughCurrency(PlayerData playerData)
         {
