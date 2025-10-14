@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8dfc51c69534c4cb8f3c251afe04e38, type: 3}
   m_Name: gold_cheat_currency
   m_EditorClassIdentifier: 
-  _value: 100
+  _value: 5
