@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8dfc51c69534c4cb8f3c251afe04e38, type: 3}
-  m_Name: gold_currency_10
+  m_Script: {fileID: 11500000, guid: 2a87359d713d47ed84d440c926482237, type: 3}
+  m_Name: shop_product 1
   m_EditorClassIdentifier: 
-  _value: 10
+  _cost:
+  - {fileID: 11400000, guid: 0b0d3c123148f421a9fe84fa6de0ebd6, type: 2}
+  _reward:
+  - {fileID: 11400000, guid: a6f19db8aa7e048b3973754cd6d47d00, type: 2}
