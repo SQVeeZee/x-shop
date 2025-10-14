@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Shop
 {
-    public class ProjectController : MonoBehaviour
+    public class ProjectRunner : MonoBehaviour
     {
         [Header("services")]
         [SerializeField]

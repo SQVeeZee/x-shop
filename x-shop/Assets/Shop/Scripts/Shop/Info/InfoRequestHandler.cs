@@ -27,7 +27,7 @@ namespace Shop
             _bindings.Add(data.Listener, handler);
             return;
 
-            void handler() => _sceneService.LoadScene();
+            void handler() => _sceneService.LoadSceneWithPayload<PayloadProduct>(SceneService.ShopCardScene, new PayloadProduct(data));
         }
 
         public void Release()

@@ -33,6 +33,7 @@ namespace Shop
 
         void IInfoListener.Initialize(Action onRequest)
         {
+            _infoButton.gameObject.SetActive(true);
             _onInfo = onRequest;
             _infoButton.onClick.AddListener(InfoClickHandler);
         }

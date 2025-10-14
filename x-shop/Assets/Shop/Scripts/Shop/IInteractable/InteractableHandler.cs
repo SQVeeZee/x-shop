@@ -28,6 +28,8 @@ namespace Shop
             }
         }
 
+        public void Release() => _interactableData.Clear();
+
         private void UpdateInteractableState(InteractableData interactableData)
         {
             var costs = interactableData.ProductConfig.GetCosts();
@@ -42,5 +44,7 @@ namespace Shop
             }
             interactableData.Interactable.SetState(true);
         }
+
+
     }
 }
