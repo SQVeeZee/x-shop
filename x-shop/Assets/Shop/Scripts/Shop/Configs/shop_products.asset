@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _productConfigs:
   - {fileID: 11400000, guid: be1234de314a142a2b8d167803f85692, type: 2}
-  - {fileID: 11400000, guid: 0ebb3cbeadbe1419d90ecd85f5bf65a1, type: 2}
   - {fileID: 11400000, guid: fb18ccfb6fcc948579261136c6608166, type: 2}
+  - {fileID: 11400000, guid: 0ebb3cbeadbe1419d90ecd85f5bf65a1, type: 2}

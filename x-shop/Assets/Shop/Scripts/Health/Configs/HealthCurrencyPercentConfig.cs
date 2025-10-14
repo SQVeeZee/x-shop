@@ -13,8 +13,7 @@ namespace Shop.Health
         protected override bool IsEnoughCurrency(PlayerData playerData)
         {
             var current = playerData.GetDataInt(CurrencyId);
-            var delta = Mathf.CeilToInt(current * (_percent / 100f));
-            return current >= delta;
+            return current > 0;
         }
 
         protected override void SubtractCurrency(PlayerData playerData)

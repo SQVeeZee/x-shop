@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Shop.Core
@@ -6,25 +7,26 @@ namespace Shop.Core
     {
         public static PlayerData Instance { get; private set; }
 
-        private void Awake()
+        private readonly Dictionary<string, int> _intData = new();
+        private readonly Dictionary<string, float> _floatData = new();
+        private readonly Dictionary<string, string> _stringData = new();
+
+        public void Initialize() => Instance = this;
+
+        public int GetDataInt(string key) => _intData.GetValueOrDefault(key, 0);
+        public void SetDataInt(string key, int value) => _intData[key] = value;
+
+        public string GetDataString(string key) => _stringData.TryGetValue(key, out var value) ? value : string.Empty;
+        public void SetDataString(string key, string value) => _stringData[key] = value;
+
+        public float GetDataFloat(string key) => _floatData.GetValueOrDefault(key, 0f);
+        public void SetDataFloat(string key, float value) => _floatData[key] = value;
+
+        public void ClearAll()
         {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            _intData.Clear();
+            _floatData.Clear();
+            _stringData.Clear();
         }
-
-        public int GetDataInt(string key) => PlayerPrefs.GetInt(key, 0);
-        public void SetDataInt(string key, int value) => PlayerPrefs.SetInt(key, value);
-
-        public string GetDataString(string key) => PlayerPrefs.GetString(key, string.Empty);
-        public void SetDataString(string key, string value) => PlayerPrefs.SetString(key, value);
-
-        public float GetDataFloat(string key) => PlayerPrefs.GetFloat(key, 0f);
-        public void SetDataFloat(string key, float value) => PlayerPrefs.SetFloat(key, value);
     }
 }

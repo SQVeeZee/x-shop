@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Shop.Gold
 {
     [CreateAssetMenu(menuName = "Shop/Config/Currency/Gold", fileName = "gold_currency", order = 0)]
-    public class GoldCurrencyConfig : CurrencyDataConfig
+    public class GoldCurrencyConfig : BaseCurrencyConfig
     {
         [SerializeField]
         private int _value;
@@ -32,5 +32,7 @@ namespace Shop.Gold
             var total = current + _value;
             playerData.SetDataInt(CurrencyId, total);
         }
+
+        protected override string GetValue(PlayerData playerData) => playerData.GetDataInt(CurrencyId).ToString();
     }
 }
