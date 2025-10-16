@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Shop.Gold
 {
     [CreateAssetMenu(menuName = "Shop/Config/Currency/Gold", fileName = "gold_currency", order = 0)]
-    public class GoldCurrencyConfig : BaseCurrencyConfig
+    public class GoldCurrencyConfig : CurrencyConfigBase
     {
         [SerializeField]
         private int _value;

@@ -22,8 +22,9 @@ namespace Shop.Core
         public float GetDataFloat(string key) => _floatData.GetValueOrDefault(key, 0f);
         public void SetDataFloat(string key, float value) => _floatData[key] = value;
 
-        public void ClearAll()
+        public void Release()
         {
+            Instance = null;
             _intData.Clear();
             _floatData.Clear();
             _stringData.Clear();

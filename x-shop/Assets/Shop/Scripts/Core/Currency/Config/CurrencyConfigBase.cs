@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Shop.Core
 {
-    public abstract class BaseCurrencyConfig : ScriptableObject, ICostOperation, IRewardOperation, ICheatOperation, ICurrencyInfo
+    public abstract class CurrencyConfigBase : ScriptableObject, ICostOperation, IRewardOperation, ICurrencyInfo
     {
         protected abstract string CurrencyId { get; }
         public abstract string DescriptionInfo { get; }
@@ -10,7 +10,6 @@ namespace Shop.Core
         bool ICostOperation.CanAfford(PlayerData playerData) => IsEnoughCurrency(playerData);
         void ICostOperation.Subtract(PlayerData playerData) => SubtractCurrency(playerData);
         void IRewardOperation.Apply(PlayerData playerData) => ApplyReward(playerData);
-        void ICheatOperation.Apply(PlayerData playerData) => ApplyReward(playerData);
         string ICurrencyInfo.GetValue(PlayerData playerData) => GetValue(playerData);
         string ICurrencyInfo.Currency => DescriptionInfo;
 

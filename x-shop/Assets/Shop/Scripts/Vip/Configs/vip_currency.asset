@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: vip_currency
   m_EditorClassIdentifier: 
   _vipData:
-    _days: 1
-    _hours: 1
-    _minutes: 1
-    _seconds: 1
+    _days: 0
+    _hours: 0
+    _minutes: 0
+    _seconds: 60

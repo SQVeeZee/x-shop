@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _vipData:
     _days: 0
-    _hours: 1
+    _hours: 0
     _minutes: 0
-    _seconds: 0
+    _seconds: 60

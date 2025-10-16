@@ -15,16 +15,11 @@ namespace Shop
         private string _currentSceneName;
         private string _previousSceneName;
 
-        public void Initialize()
-        {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
+        public void Initialize() => Instance = this;
 
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+        public void Release()
+        {
+
         }
 
         public void LoadSceneWithPayload<TPayload>(string sceneName, TPayload payload)

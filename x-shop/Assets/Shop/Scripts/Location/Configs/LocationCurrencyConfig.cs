@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Shop.Location
 {
     [CreateAssetMenu(menuName = "Shop/Config/Currency/Location", fileName = "location_currency", order = 0)]
-    public class LocationCurrencyConfig : BaseCurrencyConfig
+    public class LocationCurrencyConfig : CurrencyConfigBase
     {
         [SerializeField]
         private string _value;

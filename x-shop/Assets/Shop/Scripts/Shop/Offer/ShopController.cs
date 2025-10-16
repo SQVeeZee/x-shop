@@ -1,38 +1,21 @@
-using Shop.Core;
 using UnityEngine;
 
 namespace Shop
 {
-    public class ProjectRunner : MonoBehaviour
+    public class ShopController : MonoBehaviour
     {
-        [Header("services")]
-        [SerializeField]
-        private PurchaseService _purchaseService;
-        [SerializeField]
-        private PlayerData _playerData;
-        [SerializeField]
-        private SceneService _sceneService;
-        [SerializeField]
-        private ViewersService _viewersService;
-
-        [Header("shop")]
-        [SerializeField]
-        private CheatController _cheatController;
         [SerializeField]
         private ShopOfferController _offerController;
+        [SerializeField]
+        private CheatController _cheatController;
 
-        public void Awake()
-        {
-            _purchaseService.Initialize();
-            _playerData.Initialize();
-            _sceneService.Initialize();
-            _viewersService.Initialize();
-        }
+        private PurchaseService _purchaseService;
+        private ViewersService _viewersService;
 
-        private void Start()
+        public void Initialize()
         {
-            _purchaseService.OnPurchased += PurchaseHandler;
-            _viewersService.OnUpdate += UpdateViewersHandler;
+            _purchaseService = PurchaseService.Instance;
+            _viewersService = ViewersService.Instance;
 
             _offerController.Initialize();
             _cheatController.Initialize();
@@ -41,12 +24,16 @@ namespace Shop
             _offerController.CheckButtonState();
 
             _cheatController.CreateCheats();
+
+            _purchaseService.OnPurchased += PurchaseHandler;
+            _viewersService.OnUpdate += UpdateViewersHandler;
         }
 
-        public void OnDestroy()
+        public void Release()
         {
             _purchaseService.OnPurchased -= PurchaseHandler;
             _viewersService.OnUpdate -= UpdateViewersHandler;
+
             _offerController.Release();
             _cheatController.Release();
         }

@@ -8,9 +8,9 @@ namespace Shop
     public class ProductConfig : ScriptableObject
     {
         [SerializeField]
-        private BaseCurrencyConfig[] _cost;
+        private CurrencyConfigBase[] _cost;
         [SerializeField]
-        private BaseCurrencyConfig[] _reward;
+        private CurrencyConfigBase[] _reward;
 
         public ICostOperation[] GetCosts()
         {

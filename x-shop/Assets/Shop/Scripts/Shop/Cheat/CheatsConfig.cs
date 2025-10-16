@@ -7,8 +7,8 @@ namespace Shop
     public class CheatsConfig : ScriptableObject
     {
         [SerializeField]
-        private BaseCurrencyConfig[] _configs;
+        private CurrencyConfigBase[] _configs;
 
-        public BaseCurrencyConfig[] Configs => _configs;
+        public CurrencyConfigBase[] Configs => _configs;
     }
 }

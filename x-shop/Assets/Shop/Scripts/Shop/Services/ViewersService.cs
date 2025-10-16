@@ -8,11 +8,10 @@ namespace Shop
         public static ViewersService Instance { get; private set; }
         public event Action OnUpdate;
 
-        public void Initialize()
-        {
-            Instance = this;
-        }
+        public void Initialize() => Instance = this;
 
         public void NotifyUpdate() => OnUpdate?.Invoke();
+
+        public void Release() => OnUpdate = null;
     }
 }

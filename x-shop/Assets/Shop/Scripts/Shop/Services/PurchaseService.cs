@@ -1,5 +1,5 @@
 using System;
-using System.Threading.Tasks;
+using System.Collections;
 using Shop.Core;
 using UnityEngine;
 
@@ -7,22 +7,40 @@ namespace Shop
 {
     public class PurchaseService : MonoBehaviour
     {
+        private Coroutine _purchaseCoroutine;
         public static PurchaseService Instance { get; private set; }
+
+        public bool InProgress { get; private set; }
 
         public event Action OnPurchased;
 
         public void Initialize() => Instance = this;
-
-        public bool TryApplyTransaction(PlayerData playerData, ProductConfig productConfig)
+        public void Release()
         {
-            var costs = productConfig.GetCosts();
-            if(!IsEnoughCurrency(playerData, costs))
+            TryStopPurchasingCoroutine();
+            Instance = null;
+            OnPurchased = null;
+        }
+
+        public void TryApplyTransaction(PlayerData playerData, ProductConfig product, Action callback)
+        {
+            if (InProgress)
             {
-                return false;
+                throw new InvalidOperationException("Purchase in progress");
             }
-            var rewards = productConfig.GetRewards();
+            TryStopPurchasingCoroutine();
+            _purchaseCoroutine = StartCoroutine(ProcessPurchaseRoutine(playerData, product, callback));
+        }
+
+        private IEnumerator ProcessPurchaseRoutine(PlayerData playerData, ProductConfig product, Action callback)
+        {
+            InProgress = true;
+            yield return new WaitForSeconds(3f);
+            var costs = product.GetCosts();
+            var rewards = product.GetRewards();
             ApplyTransaction(playerData, costs, rewards);
-            return true;
+            InProgress = false;
+            callback?.Invoke();
         }
 
         private void ApplyTransaction(PlayerData playerData, ICostOperation[] costs, IRewardOperation[] rewards)
@@ -30,18 +48,6 @@ namespace Shop
             Subtract(playerData, costs);
             ApplyRewards(playerData, rewards);
             OnPurchased?.Invoke();
-        }
-
-        private static bool IsEnoughCurrency(PlayerData playerData, ICostOperation[] costs)
-        {
-            foreach (var costData in costs)
-            {
-                if (!costData.CanAfford(playerData))
-                {
-                    return false;
-                }
-            }
-            return true;
         }
 
         private static void Subtract(PlayerData playerData, ICostOperation[] costs)
@@ -52,7 +58,7 @@ namespace Shop
             }
         }
 
-        public void ApplyRewards(PlayerData playerData, IRewardOperation[] rewards)
+        private static void ApplyRewards(PlayerData playerData, IRewardOperation[] rewards)
         {
             foreach (var costData in rewards)
             {
@@ -60,11 +66,14 @@ namespace Shop
             }
         }
 
-        private async Task<bool> BuyAsync(ProductConfig p)
+        private void TryStopPurchasingCoroutine()
         {
-            await Task.Delay(3000);
-
-            return true;
+            if (_purchaseCoroutine == null)
+            {
+                return;
+            }
+            StopCoroutine(_purchaseCoroutine);
+            _purchaseCoroutine = null;
         }
     }
 }

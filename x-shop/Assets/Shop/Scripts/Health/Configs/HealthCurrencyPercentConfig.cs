@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Shop.Health
 {
     [CreateAssetMenu(menuName = "Shop/Config/Currency/Health/Health percent", fileName = "health_percent_currency", order = 0)]
-    public class HealthCurrencyPercentConfig : BaseHealthCurrencyConfig
+    public class HealthCurrencyPercentConfig : HealthCurrencyConfigBase
     {
         [Range(0f, 100f)]
         [SerializeField]

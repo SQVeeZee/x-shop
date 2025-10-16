@@ -11,7 +11,7 @@ namespace Shop
 
         private DescriptionHandler _descriptionHandler;
         private InfoRequestHandler _cardInfoHandler;
-        private PurchaseProductHandler _purchaseProductHandler;
+        private PurchasableViewHandler _purchaseProductHandler;
         private InteractableHandler _interactableHandler;
 
         public void Initialize()
@@ -19,17 +19,12 @@ namespace Shop
             var amount = _shopProductsConfig.ProductConfigs.Length;
             _descriptionHandler = new DescriptionHandler();
             _cardInfoHandler = new InfoRequestHandler(amount);
-            _purchaseProductHandler = new PurchaseProductHandler(amount);
+            _purchaseProductHandler = new PurchasableViewHandler(amount);
             _interactableHandler = new InteractableHandler(amount);
             _cardFactory.Initialize(amount);
         }
 
-        public void Release()
-        {
-            _cardFactory.Release();
-            _cardInfoHandler.Release();
-            _purchaseProductHandler.Release();
-        }
+        public void Release() => _cardFactory.Release();
 
         public void CreateProductsView()
         {

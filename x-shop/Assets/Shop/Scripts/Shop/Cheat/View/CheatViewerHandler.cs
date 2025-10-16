@@ -3,12 +3,12 @@ using Shop.Core;
 
 namespace Shop
 {
-    public class CheatViewerHandler
+    public class CheatViewHandler
     {
         private readonly List<CheatViewData> _viewDatas;
         private readonly PlayerData _playerData;
 
-        public CheatViewerHandler(int amount)
+        public CheatViewHandler(int amount)
         {
             _playerData = PlayerData.Instance;
             _viewDatas = new List<CheatViewData>(amount);

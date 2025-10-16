@@ -14,6 +14,8 @@ namespace Shop
             _interactableData = new List<InteractableData>(amount);
         }
 
+        ~InteractableHandler() => _interactableData.Clear();
+
         public void AddInteractable(InteractableData interactableData)
         {
             _interactableData.Add(interactableData);
@@ -28,7 +30,6 @@ namespace Shop
             }
         }
 
-        public void Release() => _interactableData.Clear();
 
         private void UpdateInteractableState(InteractableData interactableData)
         {
@@ -44,7 +45,5 @@ namespace Shop
             }
             interactableData.Interactable.SetState(true);
         }
-
-
     }
 }

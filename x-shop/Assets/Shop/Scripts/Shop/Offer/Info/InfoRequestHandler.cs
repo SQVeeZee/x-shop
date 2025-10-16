@@ -16,6 +16,15 @@ namespace Shop
             _bindings = new Dictionary<IInfoListener, Action>(amount);
         }
 
+        ~InfoRequestHandler()
+        {
+            foreach (var binding in _bindings)
+            {
+                binding.Key.Release();
+            }
+            _bindings.Clear();
+        }
+
         public void AddRequestListener(InfoData data)
         {
             if (_bindings.ContainsKey(data.Listener))
@@ -30,13 +39,6 @@ namespace Shop
             void handler() => _sceneService.LoadSceneWithPayload<PayloadProduct>(SceneService.ShopCardScene, new PayloadProduct(data));
         }
 
-        public void Release()
-        {
-            foreach (var binding in _bindings)
-            {
-                binding.Key.Release();
-            }
-            _bindings.Clear();
-        }
+
     }
 }

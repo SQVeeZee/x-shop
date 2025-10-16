@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Shop.Health
 {
     [CreateAssetMenu(menuName = "Shop/Config/Currency/Health/Health", fileName = "health_currency", order = 0)]
-    public class HealthCurrencyConfig : BaseHealthCurrencyConfig
+    public class HealthCurrencyConfig : HealthCurrencyConfigBase
     {
         [SerializeField]
         private int _value;

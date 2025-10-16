@@ -35,7 +35,6 @@ namespace Shop.Core
 
         void ICheatViewer.UpdateCurrency(string value) => ApplyText(_id, value);
 
-
         private void ApplyClickHandler() => _onApply?.Invoke();
         private void ApplyText(string id, string value) => _text.text = $"{id}: {value}";
     }

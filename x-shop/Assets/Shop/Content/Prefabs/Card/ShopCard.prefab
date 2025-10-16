@@ -244,7 +244,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -40, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4713464875633246789
 CanvasRenderer:
@@ -274,10 +274,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Buy
+  m_text: Processing...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -301,10 +301,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 27.6
+  m_fontSizeBase: 27
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -354,7 +354,7 @@ GameObject:
   - component: {fileID: 5468619422615834151}
   - component: {fileID: 6254629269366635596}
   - component: {fileID: 8274476132949606648}
-  - component: {fileID: 6869335867927361193}
+  - component: {fileID: 9132656318617931275}
   m_Layer: 5
   m_Name: BuyButton
   m_TagString: Untagged
@@ -380,7 +380,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 10}
-  m_SizeDelta: {x: 120, y: 60}
+  m_SizeDelta: {x: 200, y: 60}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &6254629269366635596
 CanvasRenderer:
@@ -420,7 +420,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6869335867927361193
+--- !u!114 &9132656318617931275
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -809,4 +809,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _header: {fileID: 8234349601488617804}
   _infoButton: {fileID: 7556678673682073697}
-  _buyButton: {fileID: 6869335867927361193}
+  _purchaseButton: {fileID: 9132656318617931275}
+  _purchaseInfo: {fileID: 8274063314099214596}
+  _readyToBuyDescription: buy
+  _processingDescription: Processing...

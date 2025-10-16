@@ -10,13 +10,13 @@ namespace Shop
         private CheatFactory _cheatFactory;
 
         private CheatOperationHandler _cheatOperationHandler;
-        private CheatViewerHandler _cheatViewerHandler;
+        private CheatViewHandler _cheatViewerHandler;
 
         public void Initialize()
         {
             var length = _cheatsConfig.Configs.Length;
             _cheatOperationHandler = new CheatOperationHandler(length);
-            _cheatViewerHandler = new CheatViewerHandler(length);
+            _cheatViewerHandler = new CheatViewHandler(length);
             _cheatFactory.Initialize(length);
         }
 

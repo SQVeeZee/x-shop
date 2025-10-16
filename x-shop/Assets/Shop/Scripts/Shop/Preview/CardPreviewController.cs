@@ -11,7 +11,7 @@ namespace Shop
         private Button _closeButton;
 
         private DescriptionHandler _descriptionHandler;
-        private PurchaseProductHandler _purchaseProductHandler;
+        private PurchasableViewHandler _purchaseProductHandler;
         private InteractableHandler _interactableHandler;
         private SceneService _sceneService;
 
@@ -19,7 +19,7 @@ namespace Shop
         {
             _sceneService = SceneService.Instance;
             _descriptionHandler = new DescriptionHandler();
-            _purchaseProductHandler = new PurchaseProductHandler(1);
+            _purchaseProductHandler = new PurchasableViewHandler(1);
             _interactableHandler = new InteractableHandler(1);
             _cardFactory.Initialize(1);
             _closeButton.onClick.AddListener(CloseButtonHandler);
@@ -30,7 +30,6 @@ namespace Shop
         public void Release()
         {
             _cardFactory.Release();
-            _purchaseProductHandler.Release();
             _closeButton.onClick.RemoveListener(CloseButtonHandler);
         }
 
