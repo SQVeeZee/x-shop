@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd20120bf864cf1bf3857f4c5550100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cheatsConfig: {fileID: 11400000, guid: 265a8eaa247f840f2a41a9788e64ced6, type: 2}
+  _cheatsConfig: {fileID: 11400000, guid: 6b251f594db4540e1ba5a9e2a0a58c51, type: 2}
   _cheatFactory: {fileID: 1017429370}
 --- !u!1 &472143751
 GameObject:
@@ -331,6 +331,97 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1086625401}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &814251687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 814251688}
+  - component: {fileID: 814251689}
+  m_Layer: 0
+  m_Name: CardFactory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &814251688
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814251687}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 847745447}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &814251689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814251687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e93b91fcb944a9180316d0307c66c8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shopCard: {fileID: 4961880899943287024, guid: 36301321932de41a68656526fbb82e35, type: 3}
+--- !u!1 &847745446
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 847745447}
+  - component: {fileID: 847745448}
+  m_Layer: 0
+  m_Name: ShopCardService
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &847745447
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847745446}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 814251688}
+  m_Father: {fileID: 1973608931}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &847745448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847745446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77f25bae434441749579f5a9942e4bc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardFactory: {fileID: 814251689}
 --- !u!1 &893613752
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,7 +763,7 @@ MonoBehaviour:
   _purchaseService: {fileID: 1178210648}
   _playerData: {fileID: 959187573}
   _sceneService: {fileID: 893613754}
-  _viewersService: {fileID: 1487747681}
+  _shopCardService: {fileID: 847745448}
   _shopController: {fileID: 1437042117}
 --- !u!1 &1132463512
 GameObject:
@@ -758,7 +849,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1204265541}
-  - component: {fileID: 1204265544}
   - component: {fileID: 1204265542}
   - component: {fileID: 1204265543}
   m_Layer: 5
@@ -827,20 +917,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 0
---- !u!114 &1204265544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1204265540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e93b91fcb944a9180316d0307c66c8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shopCard: {fileID: 4961880899943287024, guid: 36301321932de41a68656526fbb82e35, type: 3}
-  _root: {fileID: 1204265541}
 --- !u!1 &1437042115
 GameObject:
   m_ObjectHideFlags: 0
@@ -893,50 +969,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _offerController: {fileID: 1637809873}
   _cheatController: {fileID: 289071777}
---- !u!1 &1487747679
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1487747680}
-  - component: {fileID: 1487747681}
-  m_Layer: 0
-  m_Name: ViewersUpdate
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1487747680
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487747679}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1973608931}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1487747681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487747679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2865e1eae55c4a19b219148816b7a6a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1584204068
 GameObject:
   m_ObjectHideFlags: 0
@@ -1159,8 +1191,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1999b04e906a4f84ac215da7fc3a2e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardFactory: {fileID: 1204265544}
   _shopProductsConfig: {fileID: 11400000, guid: cc0a623452ce84fa3866964a61ca2170, type: 2}
+  _cardRoot: {fileID: 1204265541}
 --- !u!1 &1973608930
 GameObject:
   m_ObjectHideFlags: 0
@@ -1193,7 +1225,7 @@ Transform:
   - {fileID: 959187572}
   - {fileID: 1178210649}
   - {fileID: 893613753}
-  - {fileID: 1487747680}
+  - {fileID: 847745447}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807

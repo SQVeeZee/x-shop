@@ -22,7 +22,7 @@ namespace Shop
             OnPurchased = null;
         }
 
-        public void TryApplyTransaction(PlayerData playerData, ProductConfig product, Action callback)
+        public void TryApplyTransactionWithDelay(PlayerData playerData, ProductConfig product, Action callback)
         {
             if (InProgress)
             {
@@ -32,15 +32,32 @@ namespace Shop
             _purchaseCoroutine = StartCoroutine(ProcessPurchaseRoutine(playerData, product, callback));
         }
 
+        public void TryApplyTransaction(PlayerData playerData, ProductConfig product, Action callback = null)
+        {
+            if (InProgress)
+            {
+                throw new InvalidOperationException("Purchase in progress");
+            }
+            InProgress = true;
+            ApplyTransaction(playerData, product);
+            InProgress = false;
+            callback?.Invoke();
+        }
+
         private IEnumerator ProcessPurchaseRoutine(PlayerData playerData, ProductConfig product, Action callback)
         {
             InProgress = true;
             yield return new WaitForSeconds(3f);
-            var costs = product.GetCosts();
-            var rewards = product.GetRewards();
-            ApplyTransaction(playerData, costs, rewards);
+            ApplyTransaction(playerData, product);
             InProgress = false;
             callback?.Invoke();
+        }
+
+        private void ApplyTransaction(PlayerData playerData, ProductConfig product)
+        {
+            var costs = product.GetCostsOperations();
+            var rewards = product.GetRewardsOperations();
+            ApplyTransaction(playerData, costs, rewards);
         }
 
         private void ApplyTransaction(PlayerData playerData, ICostOperation[] costs, IRewardOperation[] rewards)

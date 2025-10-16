@@ -6,41 +6,44 @@ namespace Shop
     public class CardPreviewController : MonoBehaviour
     {
         [SerializeField]
-        private CardFactory _cardFactory;
+        private Transform _cardRoot;
         [SerializeField]
         private Button _closeButton;
 
-        private DescriptionHandler _descriptionHandler;
-        private PurchasableViewHandler _purchaseProductHandler;
-        private InteractableHandler _interactableHandler;
         private SceneService _sceneService;
+        private ShopCardService _shopCardService;
 
-        public void Initialize()
+        private ProductCardData _previewCardData;
+
+        public void Initialize(ProductConfig productConfig)
         {
             _sceneService = SceneService.Instance;
-            _descriptionHandler = new DescriptionHandler();
-            _purchaseProductHandler = new PurchasableViewHandler(1);
-            _interactableHandler = new InteractableHandler(1);
-            _cardFactory.Initialize(1);
+            _shopCardService = ShopCardService.Instance;
+
             _closeButton.onClick.AddListener(CloseButtonHandler);
+            _previewCardData = CreateShopCard(productConfig);
+        }
+
+        public void Release()
+        {
+            _closeButton.onClick.RemoveListener(CloseButtonHandler);
+            ReleaseShopCard(_previewCardData);
         }
 
         private void CloseButtonHandler() => _sceneService.ReturnBack();
 
-        public void Release()
+        private ProductCardData CreateShopCard(ProductConfig productConfig)
         {
-            _cardFactory.Release();
-            _closeButton.onClick.RemoveListener(CloseButtonHandler);
+            var productCardData = _shopCardService.CreateShopProductCard(productConfig, _cardRoot);
+            _shopCardService.RegisterPurchase(productCardData);
+            _shopCardService.RegisterInteractable(productCardData);
+            return productCardData;
         }
 
-        public void CreateProductView(ProductConfig productConfig)
+        private void ReleaseShopCard(ProductCardData productCardData)
         {
-            var card = _cardFactory.CreateCard();
-            _purchaseProductHandler.AddPurchaseListener(new PurchaseData(productConfig, card));
-            _descriptionHandler.UpdateDescription(new DescriptionData(productConfig, card));
-            _interactableHandler.AddInteractable(new InteractableData(productConfig, card));
+            _shopCardService.UnRegisterPurchase(productCardData);
+            _shopCardService.UnRegisterInteractable(productCardData);
         }
-
-        public void CheckButtonState() => _interactableHandler.CheckProducts();
     }
 }

@@ -16,11 +16,7 @@ namespace Shop
         private string _previousSceneName;
 
         public void Initialize() => Instance = this;
-
-        public void Release()
-        {
-
-        }
+        public void Release() => Instance = null;
 
         public void LoadSceneWithPayload<TPayload>(string sceneName, TPayload payload)
             where TPayload : IPayload

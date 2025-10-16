@@ -1,4 +1,3 @@
-using System.Threading;
 using Shop.Core;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ namespace Shop
         [SerializeField]
         private SceneService _sceneService;
         [SerializeField]
-        private ViewersService _viewersService;
+        private ShopCardService _shopCardService;
 
         [Header("shop")]
         [SerializeField]
@@ -25,19 +24,19 @@ namespace Shop
             _playerData.Initialize();
             _purchaseService.Initialize();
             _sceneService.Initialize();
-            _viewersService.Initialize();
+            _shopCardService.Initialize();
         }
 
         private void Start() => _shopController.Initialize();
 
         public void OnDestroy()
         {
-            _shopController.Release();
-
             _playerData.Release();
             _purchaseService.Release();
             _sceneService.Release();
-            _viewersService.Release();
+            _shopCardService.Release();
+
+            // _shopController.Release();
         }
     }
 }

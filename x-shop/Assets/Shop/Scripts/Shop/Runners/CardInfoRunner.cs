@@ -11,9 +11,7 @@ namespace Shop
         {
             var sceneService = SceneService.Instance;
             var payloadProduct = sceneService.GetPayload<PayloadProduct>();
-            _cardPreviewController.Initialize();
-            _cardPreviewController.CreateProductView(payloadProduct.InfoData.ProductConfig);
-            _cardPreviewController.CheckButtonState();
+            _cardPreviewController.Initialize(payloadProduct.Config);
         }
 
         private void OnDestroy() => _cardPreviewController.Release();

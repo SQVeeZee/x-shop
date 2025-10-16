@@ -1,40 +1,71 @@
-using System.Collections.Generic;
 using Shop.Core;
 
 namespace Shop
 {
-    public class CheatViewHandler
+    public class CheatViewHandler : CheatHandler<ICheatViewer>
     {
-        private readonly List<CheatViewData> _viewDatas;
         private readonly PlayerData _playerData;
+        private readonly PurchaseService _purchaseService;
 
-        public CheatViewHandler(int amount)
+        public CheatViewHandler(int amount) : base(amount)
         {
+            _purchaseService = PurchaseService.Instance;
             _playerData = PlayerData.Instance;
-            _viewDatas = new List<CheatViewData>(amount);
+
+            _purchaseService.OnPurchased += PurchaseHandle;
         }
 
-        public void AddViewer(CheatViewData viewData)
+        protected override void OnAddedProduct(HandlerInfo<ICheatViewer> productCardData)
+            => SetViewer(productCardData.View, productCardData.Config);
+
+        public override void Release()
         {
-            _viewDatas.Add(viewData);
-            SetViewer(viewData);
+            CheatViews.Clear();
+            _purchaseService.OnPurchased -= PurchaseHandle;
         }
 
-        public void UpdateViewers()
+        private void PurchaseHandle() => UpdateViewers();
+
+        private void UpdateViewers()
         {
-            foreach (var viewData in _viewDatas)
+            foreach (var cheatView in CheatViews)
             {
-                var value = viewData.Info.GetValue(_playerData);
-                viewData.Viewer.UpdateCurrency(value);
+                if (!GetConfigElement(cheatView.Config, out var config))
+                {
+                    return;
+                }
+                var value = config.GetValue(_playerData);
+                cheatView.View.UpdateCurrency(value);
             }
         }
 
-        private void SetViewer(CheatViewData viewData)
+        private void SetViewer(ICheatViewer viewer, ProductConfig productConfig)
         {
-            var info = viewData.Info;
-            var id = info.Currency;
-            var value = info.GetValue(_playerData);
-            viewData.Viewer.SetCurrency(id, value);
+            if (!GetConfigElement(productConfig, out var config))
+            {
+                return;
+            }
+            var reward = config.GetValue(_playerData);
+            viewer.SetCurrency(config.Currency, reward);
+        }
+
+        private bool GetConfigElement(ProductConfig productConfig, out CurrencyConfigBase config)
+        {
+            var costs = productConfig.Costs;
+            if (costs.Length > 0)
+            {
+                config = costs[0];
+                return true;
+            }
+            var rewards = productConfig.Rewards;
+            if (rewards.Length > 0)
+            {
+                config = rewards[0];
+                return true;
+            }
+
+            config = null;
+            return false;
         }
     }
 }

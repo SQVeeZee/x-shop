@@ -1,44 +1,31 @@
-using System;
-using System.Collections.Generic;
-using JetBrains.Annotations;
-
 namespace Shop
 {
-    public class InfoRequestHandler
+    public class InfoRequestHandler : ShopProductHandler<IInformational>
     {
         private readonly SceneService _sceneService;
-        private readonly Dictionary<IInfoListener, Action> _bindings;
 
-        [UsedImplicitly]
-        public InfoRequestHandler(int amount)
+        public InfoRequestHandler(int amount) : base(amount)
+            => _sceneService = SceneService.Instance;
+
+        protected override void OnAddedProduct(HandlerInfo<IInformational> productCardData)
         {
-            _sceneService = SceneService.Instance;
-            _bindings = new Dictionary<IInfoListener, Action>(amount);
+            var productConfig = productCardData.Config;
+            var informational = productCardData.View;
+            informational.Initialize(() => LoadSceneWithPayLoad(productConfig));
         }
 
-        ~InfoRequestHandler()
+        private void LoadSceneWithPayLoad(ProductConfig productConfig)
+            => _sceneService.LoadSceneWithPayload(SceneService.ShopCardScene, new PayloadProduct(productConfig));
+
+        protected override void DisposeProduct(IInformational productCardData) => productCardData.Release();
+
+        public override void Release()
         {
-            foreach (var binding in _bindings)
+            foreach (var productCard in ProductCards)
             {
-                binding.Key.Release();
+                productCard.View.Release();
             }
-            _bindings.Clear();
+            ProductCards.Clear();
         }
-
-        public void AddRequestListener(InfoData data)
-        {
-            if (_bindings.ContainsKey(data.Listener))
-            {
-                return;
-            }
-
-            data.Listener.Initialize(handler);
-            _bindings.Add(data.Listener, handler);
-            return;
-
-            void handler() => _sceneService.LoadSceneWithPayload<PayloadProduct>(SceneService.ShopCardScene, new PayloadProduct(data));
-        }
-
-
     }
 }

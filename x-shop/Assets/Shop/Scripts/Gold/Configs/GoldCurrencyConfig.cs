@@ -10,7 +10,8 @@ namespace Shop.Gold
         private int _value;
 
         protected override string CurrencyId => "gold_currency";
-        public override string DescriptionInfo => "Gold";
+        public override string Currency => "Gold";
+        public override string GetValue(PlayerData playerData) => playerData.GetDataInt(CurrencyId).ToString();
 
         protected override bool IsEnoughCurrency(PlayerData playerData)
         {
@@ -33,6 +34,5 @@ namespace Shop.Gold
             playerData.SetDataInt(CurrencyId, total);
         }
 
-        protected override string GetValue(PlayerData playerData) => playerData.GetDataInt(CurrencyId).ToString();
     }
 }

@@ -2,8 +2,8 @@ namespace Shop
 {
     public class PayloadProduct : IPayload
     {
-        public InfoData InfoData { get; private set; }
+        public ProductConfig Config { get; private set; }
 
-        public PayloadProduct(InfoData data) => InfoData = data;
+        public PayloadProduct(ProductConfig config) => Config = config;
     }
 }

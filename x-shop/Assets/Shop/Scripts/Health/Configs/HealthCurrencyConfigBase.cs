@@ -5,8 +5,8 @@ namespace Shop.Health
     public abstract class HealthCurrencyConfigBase : CurrencyConfigBase
     {
         protected override string CurrencyId => "health_currency";
-        public override string DescriptionInfo => "Health";
+        public override string Currency => "Health";
 
-        protected override string GetValue(PlayerData playerData) => playerData.GetDataInt(CurrencyId).ToString();
+        public override string GetValue(PlayerData playerData) => playerData.GetDataInt(CurrencyId).ToString();
     }
 }

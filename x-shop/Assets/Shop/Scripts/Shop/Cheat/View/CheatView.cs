@@ -3,9 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Shop.Core
+namespace Shop
 {
-    public sealed class CheatView : MonoBehaviour, ICheatListener, ICheatViewer
+    public sealed class CheatView : MonoBehaviour, ICheatOperation, ICheatViewer
     {
         [SerializeField]
         private TextMeshProUGUI _text;
@@ -15,13 +15,13 @@ namespace Shop.Core
         private Action _onApply;
         private string _id;
 
-        void ICheatListener.Subscribe(Action callback)
+        void ICheatOperation.Initialize(Action callback)
         {
             _onApply = callback;
             _applyButton.onClick.AddListener(ApplyClickHandler);
         }
 
-        void ICheatListener.Release()
+        void ICheatOperation.Release()
         {
             _applyButton.onClick.RemoveListener(ApplyClickHandler);
             _onApply = null;

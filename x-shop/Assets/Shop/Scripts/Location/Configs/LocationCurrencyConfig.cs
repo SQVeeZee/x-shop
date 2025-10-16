@@ -10,7 +10,8 @@ namespace Shop.Location
         private string _value;
 
         protected override string CurrencyId => $"location_currency";
-        public override string DescriptionInfo => "Location";
+        public override string Currency => "Location";
+        public override string GetValue(PlayerData playerData) => playerData.GetDataString(CurrencyId);
 
         protected override bool IsEnoughCurrency(PlayerData playerData)
         {
@@ -21,6 +22,5 @@ namespace Shop.Location
 
         protected override void SubtractCurrency(PlayerData playerData) => playerData.SetDataString(CurrencyId, string.Empty);
         protected override void ApplyReward(PlayerData playerData) => playerData.SetDataString(CurrencyId, _value);
-        protected override string GetValue(PlayerData playerData) => playerData.GetDataString(CurrencyId);
     }
 }

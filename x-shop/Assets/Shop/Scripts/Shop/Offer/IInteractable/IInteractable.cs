@@ -1,6 +1,6 @@
 namespace Shop
 {
-    public interface IInteractable
+    public interface IInteractable : ICardBehaviour
     {
         void SetState(bool state);
     }

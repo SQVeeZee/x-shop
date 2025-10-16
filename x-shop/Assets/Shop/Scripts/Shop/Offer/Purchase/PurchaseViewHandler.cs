@@ -1,60 +1,51 @@
-using System;
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using Shop.Core;
 
 namespace Shop
 {
-    public class PurchasableViewHandler
+    public class PurchasableViewHandler : ShopProductHandler<IPurchasable>
     {
         private readonly PlayerData _playerData;
         private readonly PurchaseService _purchaseService;
 
-        private readonly Dictionary<IPurchasable, Action> _bindings;
-
         [UsedImplicitly]
-        public PurchasableViewHandler(int amount)
+        public PurchasableViewHandler(int amount) : base(amount)
         {
             _playerData = PlayerData.Instance;
             _purchaseService = PurchaseService.Instance;
-            _bindings = new Dictionary<IPurchasable, Action>(amount);
         }
 
-        ~PurchasableViewHandler()
+        protected override void OnAddedProduct(HandlerInfo<IPurchasable> productCardData)
         {
-            foreach (var binding in _bindings)
-            {
-                binding.Key.Release();
-            }
-            _bindings.Clear();
-        }
-
-        public void AddPurchaseListener(PurchaseData purchaseData)
-        {
-            var purchasable = purchaseData.Purchasable;
-            if (_bindings.ContainsKey(purchasable))
-            {
-                return;
-            }
-
+            var purchasable = productCardData.View;
             purchasable.Initialize(handler);
-            _bindings.Add(purchasable, handler);
             return;
+            void handler() => CardBuyClickHandler(purchasable, productCardData.Config);
 
-            void handler() => CardBuyClickHandler(purchaseData);
         }
 
-        private void CardBuyClickHandler(PurchaseData purchaseData)
+        protected override void DisposeProduct(IPurchasable productCardData) => productCardData.Release();
+
+        public override void Release()
+        {
+            foreach (var productCardData in ProductCards)
+            {
+                productCardData.View.Release();
+            }
+            ProductCards.Clear();
+        }
+
+        private void CardBuyClickHandler(IPurchasable purchasable, ProductConfig productConfig)
         {
             if (_purchaseService.InProgress)
             {
                 return;
             }
-            purchaseData.Purchasable.SetProgressState(BuyingState.Processing);
-            _purchaseService.TryApplyTransaction(_playerData, purchaseData.ProductConfig, resetState);
+            purchasable.SetProgressState(BuyingState.Processing);
+            _purchaseService.TryApplyTransactionWithDelay(_playerData, productConfig, resetState);
             return;
 
-            void resetState() => purchaseData.Purchasable.SetProgressState(BuyingState.Ready);
+            void resetState() => purchasable.SetProgressState(BuyingState.Ready);
         }
     }
 }

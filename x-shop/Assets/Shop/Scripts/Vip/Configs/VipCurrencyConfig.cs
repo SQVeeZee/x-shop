@@ -12,7 +12,13 @@ namespace Shop.Vip
         private VipData _vipData;
 
         protected override string CurrencyId => "vip_currency";
-        public override string DescriptionInfo => "Vip";
+        public override string Currency => "Vip";
+
+        public override string GetValue(PlayerData playerData)
+        {
+            var current = GetCurrentTimeSpan(playerData);
+            return current.TotalSeconds.ToString(CultureInfo.InvariantCulture);
+        }
 
         protected override bool IsEnoughCurrency(PlayerData playerData)
         {
@@ -35,12 +41,6 @@ namespace Shop.Vip
             var reward = _vipData.ToTimeSpan();
             var total = AddReward(current, reward);
             SaveCurrentData(playerData, total);
-        }
-
-        protected override string GetValue(PlayerData playerData)
-        {
-            var current = GetCurrentTimeSpan(playerData);
-            return current.TotalSeconds.ToString(CultureInfo.InvariantCulture);
         }
 
         private static TimeSpan AddReward(TimeSpan current, TimeSpan reward)

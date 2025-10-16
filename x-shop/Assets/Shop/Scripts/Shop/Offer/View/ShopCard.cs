@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Shop
 {
-    public class ShopCard : MonoBehaviour, IDescription, IPurchasable, IInfoListener, IInteractable
+    public class ShopCard : MonoBehaviour, IPurchasable, IInformational, IInteractable
     {
         [SerializeField]
         private TextMeshProUGUI _header;
@@ -25,7 +25,7 @@ namespace Shop
         private Action _onInfoRequest;
         private Action _onPurchaseRequest;
 
-        void IDescription.SetDescription(string description) => _header.text = description;
+        public void Initialize(string description) => _header.text = description;
 
         void IPurchasable.Initialize(Action onRequest)
         {
@@ -51,14 +51,14 @@ namespace Shop
             _onPurchaseRequest = null;
         }
 
-        void IInfoListener.Initialize(Action onRequest)
+        void IInformational.Initialize(Action onRequest)
         {
             _infoButton.gameObject.SetActive(true);
             _onInfoRequest = onRequest;
             _infoButton.onClick.AddListener(InfoClickHandler);
         }
 
-        void IInfoListener.Release()
+        void IInformational.Release()
         {
             _infoButton.onClick.RemoveListener(InfoClickHandler);
             _onInfoRequest = null;

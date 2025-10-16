@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Shop
@@ -5,39 +6,56 @@ namespace Shop
     public class ShopOfferController : MonoBehaviour
     {
         [SerializeField]
-        private CardFactory _cardFactory;
-        [SerializeField]
         private ShopProductsConfig _shopProductsConfig;
+        [SerializeField]
+        private Transform _cardRoot;
 
-        private DescriptionHandler _descriptionHandler;
-        private InfoRequestHandler _cardInfoHandler;
-        private PurchasableViewHandler _purchaseProductHandler;
-        private InteractableHandler _interactableHandler;
+        private ShopCardService _shopCardService;
+
+        private List<ProductCardData> _shopProductCards;
 
         public void Initialize()
         {
-            var amount = _shopProductsConfig.ProductConfigs.Length;
-            _descriptionHandler = new DescriptionHandler();
-            _cardInfoHandler = new InfoRequestHandler(amount);
-            _purchaseProductHandler = new PurchasableViewHandler(amount);
-            _interactableHandler = new InteractableHandler(amount);
-            _cardFactory.Initialize(amount);
+            _shopCardService = ShopCardService.Instance;
+            var amount = _shopProductsConfig.Configs.Length + 1;
+
+            _shopCardService.InitializeCardHandlers(amount);
+            CreateProductsView(amount);
         }
 
-        public void Release() => _cardFactory.Release();
-
-        public void CreateProductsView()
+        public void Release()
         {
-            foreach (var productConfig in _shopProductsConfig.ProductConfigs)
+            foreach (var shopProductCard in _shopProductCards)
             {
-                var card = _cardFactory.CreateCard();
-                _purchaseProductHandler.AddPurchaseListener(new PurchaseData(productConfig, card));
-                _cardInfoHandler.AddRequestListener(new InfoData(productConfig, card));
-                _descriptionHandler.UpdateDescription(new DescriptionData(productConfig, card));
-                _interactableHandler.AddInteractable(new InteractableData(productConfig, card));
+                ReleaseShopCard(shopProductCard);
+            }
+            _shopProductCards.Clear();
+        }
+
+        private void CreateProductsView(int amount)
+        {
+            _shopProductCards = new List<ProductCardData>(amount);
+            foreach (var productConfig in _shopProductsConfig.Configs)
+            {
+                var productCardData = CreateShopCard(productConfig);
+                _shopProductCards.Add(productCardData);
             }
         }
 
-        public void CheckButtonState() => _interactableHandler.CheckProducts();
+        private ProductCardData CreateShopCard(ProductConfig productConfig)
+        {
+            var productCardData = _shopCardService.CreateShopProductCard(productConfig, _cardRoot);
+            _shopCardService.RegisterInformational(productCardData);
+            _shopCardService.RegisterPurchase(productCardData);
+            _shopCardService.RegisterInteractable(productCardData);
+            return productCardData;
+        }
+
+        private void ReleaseShopCard(ProductCardData productCardData)
+        {
+            _shopCardService.UnRegisterInformational(productCardData);
+            _shopCardService.UnRegisterPurchase(productCardData);
+            _shopCardService.UnRegisterInteractable(productCardData);
+        }
     }
 }
