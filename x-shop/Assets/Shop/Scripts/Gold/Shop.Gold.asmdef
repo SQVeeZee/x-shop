@@ -1,0 +1,16 @@
+{
+    "name": "Shop.Gold",
+    "rootNamespace": "Shop",
+    "references": [
+        "GUID:2bee58d72cd144da6b9d198b1ce4f33a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
