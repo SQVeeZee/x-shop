@@ -17,7 +17,6 @@ namespace Shop
         public void Initialize() => Instance = this;
         public void Release()
         {
-            TryStopPurchasingCoroutine();
             Instance = null;
             OnPurchased = null;
         }
